@@ -17,7 +17,7 @@ negocio.
 ## ScriptTablas
 
 A través del siguiente script sql se muestra la creación de la base de datos
-
+```
 --- Creacion de la base de datos ---
 
 CREATE DATABASE gourmet_Delight;
@@ -57,11 +57,11 @@ precioUnitario DECIMAL(10,2),
 FOREIGN KEY (menuID) REFERENCES menus(menuID),
 FOREIGN KEY (pedidoID) REFERENCES pedidos(pedidoID)
 );
-
+```
 
 ## Inserciones
 Las Inserciones propuestas para el ejercicio son las siguientes:
-
+```
 -- Insertar datos en la tabla Clientes --
 INSERT INTO clientes (nombre, correo, telefono, fecha_registro) VALUES
 ('Juan Perez', 'juan.perez@example.com', '123-456-7890', '2024-01-01'),
@@ -76,7 +76,8 @@ INSERT INTO clientes (nombre, correo, telefono, fecha_registro) VALUES
 ('Lucía Martínez', 'lucia.martinez@example.com', '123-456-7899', '2024-05-10'),
 ('Santiago Jiménez', 'santiago.jimenez@example.com', '123-456-7900', '2024-05-10'),
 ('Patricia Romero', 'patricia.romero@example.com', '123-456-7901', '2024-05-15');
-
+```
+```
 -- Insertar datos en la tabla Menus
 INSERT INTO menus (nombre, descripcion, precio) VALUES
 ('Ensalada César', 'Ensalada con lechuga romana, crutones y aderezo César', 12.50),
@@ -85,7 +86,8 @@ INSERT INTO menus (nombre, descripcion, precio) VALUES
 ('Pasta Alfredo', 'Pasta con salsa Alfredo y pollo', 15.00),
 ('Tarta de Queso', 'Tarta de queso con salsa de frambuesa', 7.50),
 ('Café Americano', 'Café americano recién preparado', 3.00);
-
+```
+```
 -- Insertar datos en la tabla pedidos --
 INSERT INTO pedidos (clienteID, fecha, total) VALUES
 (1, '2024-05-15', 40.00),
@@ -106,7 +108,8 @@ INSERT INTO pedidos (clienteID, fecha, total) VALUES
 (10,'2024-06-04', 55.75),
 (11,'2024-06-09', 52.00),
 (12,'2024-06-15', 46.25);
-
+```
+```
 --- Insertar datos en la tabla detalles_Pedidos ---
 INSERT INTO detallesPedido (pedidoID, menuID, cantidad, precioUnitario) VALUES
 (1, 1, 1, 12.50),
@@ -152,36 +155,41 @@ INSERT INTO detallesPedido (pedidoID, menuID, cantidad, precioUnitario) VALUES
 (18, 2, 1, 8.75),
 (18, 4, 1, 15.00),
 (18, 5, 1, 7.50);
+```
 ## Consultas
 Las consultas propuestas para este ejercicio son las siguientes:
-
-
+```
 ---	1. Obtener la lista de todos los menús con sus precios ---
 SELECT m.nombre, m.precio
 FROM menus as m;
-
+```
+```
 --- 2. Encontrar todos los pedidos realizados por el cliente 'Juan Perez' ---
 SELECT p.pedidoID, p.fecha, p.total
 FROM clientes AS c
 right join pedidos as p ON p.clienteID = c.clienteID
 WHERE c.nombre LIKE 'Juan Perez';
-
+```
+```
 --- 3. Listar los detalles de todos los pedidos, incluyendo el nombre del menú, cantidad y precio unitario ---
 SELECT dp.pedidoID, m.nombre, dp.cantidad, dp.precioUnitario
 FROM detallesPedido as dp
 JOIN menus m ON dp.menuID = m.menuID;
-
+```
+```
 --- 4. Calcular el total gastado por cada cliente en todos sus pedidos ---
 SELECT c.nombre AS nombreCliente, SUM(p.total) AS TotalGastado
 FROM menus AS m, pedidos AS p
 JOIN clientes AS c ON p.clienteID = c.ClienteID
 GROUP BY c.nombre;
-
+```
+```
 --- 5. Encontrar los menús con un precio mayor a $10 ---
 SELECT m.nombre, m.precio
 FROM menus AS m
 WHERE m.precio >= 10.00;
-
+```
+```
 --- 6. Obtener el menú más caro pedido al menos una vez ---
 SELECT m.nombre, m.precio
 FROM menus AS m
@@ -189,14 +197,16 @@ JOIN detallesPedido dp ON m.menuID = dp.menuID
 GROUP BY m.nombre, m.precio
 ORDER BY m.precio DESC
 LIMIT 1;
-
+```
+```
 --- 7. Listar los clientes que han realizado más de un pedido ---
 SELECT c.nombre, c.correo
 FROM clientes as c
 JOIN pedidos p ON c.clienteID = p.clienteID
 GROUP BY c.clienteID
 HAVING COUNT(p.pedidoID) > 1;
-
+```
+```
 --- 8. Obtener el cliente con el mayor gasto total---
 SELECT c.nombre
 FROM clientes c
@@ -204,8 +214,8 @@ JOIN pedidos p ON c.clienteID = p.clienteID
 JOIN detallesPedido AS dp ON p.pedidoID = dp.pedidoID 
 GROUP BY c.clienteID
 LIMIT 1;
-
-
+```
+```
 --- 9. Mostrar el pedido más reciente de cada cliente ---
 
 SELECT c.nombre AS nombre_cliente, p.fecha, p.total
@@ -216,7 +226,8 @@ JOIN (
     FROM pedidos
     GROUP BY clienteID
 ) p_max ON p.clienteID = p_max.clienteID AND p.fecha = p_max.fecha_reciente;
-
+```
+```
 --- 10.Obtener el detalle de pedidos (menús y cantidades) para el cliente 'Juan Perez'.
 SELECT dp.pedidoID AS id, m.nombre, dp.cantidad, dp.preciounitario 
 FROM detallesPedido AS dp 
@@ -224,9 +235,10 @@ JOIN menus m ON dp.menuID = m.menuID
 JOIN pedidos p ON dp.pedidoID = p.pedidoID 
 JOIN clientes c ON c.clienteID = p.clienteID
 WHERE c.nombre = 'Juan Perez';
+```
 ## Procedimientos almacenados
 Los Procedimientos a realizar son los siguientes:
-
+```
 --- 1. Crear un procedimiento almacenado para agregar un nuevo cliente ---
 DELIMITER //
 CREATE PROCEDURE sp_agregar_nuevo_cliente(
@@ -240,7 +252,8 @@ BEGIN -- Agregar los valores del nuevo cliente
   VALUES (p_nombre, p_correo, p_telefono, p_fecha_registro);
 END //
 DELIMITER ;
-
+```
+```
 --- 2.Crear un procedimiento almacenado para obtener los detalles de un pedido ---
 DELIMITER //
 CREATE PROCEDURE ObtenerDetallesPedido(
@@ -258,8 +271,9 @@ BEGIN --- Obtener los detalles del pedido
     dp.pedidoID = p_pedidoID;
 END //
 DELIMITER ;
-
---- 3.Crear un procedimiento almacenado para actualizar el precio de un menú ---
+```
+```
+--- 3.Crear un procedimiento almacenado para actualizar el precio de un menú --
 DELIMITER //
 CREATE PROCEDURE ActualizarPrecioMenu(
   IN p_menuID INT,
@@ -271,8 +285,9 @@ BEGIN -- Actualizar el precio de un menu
   WHERE menuID = p_menuID;
 END //
 DELIMITER ;
-
---- 4.Crear un procedimiento almacenado para eliminar un cliente y sus pedidos ---
+```
+```
+--- 4.Crear un procedimiento almacenado para eliminar un cliente y sus pedidos 
 DELIMITER //
 CREATE PROCEDURE EliminarCliente(
   IN p_clienteID INT
@@ -291,7 +306,8 @@ BEGIN
   WHERE clienteID = p_clienteID;
 END //
 DELIMITER ;
-
+```
+```
 --- 5.Crear un procedimiento almacenado para obtener el total gastado por un cliente ---
 DELIMITER //
 CREATE PROCEDURE ObtenerTotalGastado(
@@ -303,3 +319,4 @@ BEGIN -- Proceso de calcular el total gastado por el cliente
   WHERE p.clienteID = p_clienteID;
 END //
 DELIMITER ;
+```
