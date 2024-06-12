@@ -1,9 +1,11 @@
 
 # DelightGourmet DB
 
+```
 Nombre: Tomás Olaya Pinto
 Grupo: J3
 Filtro SQL Campuslands 2024
+```
 
 Bienvenidos al proyecto de creación de la base de datos para nuestro restaurante, Gourmet
 Delight. Como propietario de este restaurante, necesito una solución integral para gestionar la
