@@ -14,7 +14,8 @@ base de datos será crucial para organizar y mantener nuestros registros de mane
 permitiéndonos brindar un mejor servicio y tomar decisiones informadas para el crecimiento del
 negocio.
 
-
+IMPORTANTE: Las evidencias del funcionamiento de las consultas en consola fueron anexadas dentro
+de la carpeta "Procedimientos".
 
 ## ScriptTablas
 
